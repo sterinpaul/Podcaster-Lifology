@@ -6,19 +6,24 @@ import {
   DrawerBody,
   DrawerFooter,
   Button,
+  useDisclosure,
 } from "@heroui/react";
+import { Podcast } from "@/app/types";
 
 interface DrawerProps {
   isOpen: boolean;
   onOpenChange: () => void;
+  selectedPodcasts: Podcast[]
 }
 
-export default function DrawerComponent({ isOpen, onOpenChange }: DrawerProps) {
+export default function DrawerComponent({ isOpen, onOpenChange, selectedPodcasts }: DrawerProps) {
   if (!isOpen) return null;
 
   return (
     <Drawer
       isOpen={isOpen}
+      size="5xl"
+      hideCloseButton={true}
       placement="bottom"
       motionProps={{
         variants: {
@@ -38,27 +43,35 @@ export default function DrawerComponent({ isOpen, onOpenChange }: DrawerProps) {
     >
       <DrawerContent>
         {(onClose) => (
-          <>
-            <DrawerHeader className="flex flex-col gap-1">
-              Selected Podcasts
+          <div className="z-10 bg-gray-50 w-full rounded-t-2xl shadow-cyan-950 shadow-2xl border border-gray-300">
+            <DrawerHeader className="flex items-center justify-between gap-1 p-2 m-4">
+              <h2 className="text-lg font-semibold text-nowrap">Selected Podcasts</h2>
+              <Button
+                onPress={onClose}
+                className="p-1 rounded-full cursor-pointer hover:bg-gray-100"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </Button>
             </DrawerHeader>
             <DrawerBody>
-              <p>This drawer has custom enter/exit animations.</p>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-                pulvinar risus non risus hendrerit venenatis. Pellentesque sit
-                amet hendrerit risus, sed porttitor quam.
-              </p>
+              {selectedPodcasts?.map(()=>{
+                return <></>
+              })}
             </DrawerBody>
-            <DrawerFooter>
-              <Button color="danger" variant="light" onPress={onClose}>
-                Close
-              </Button>
-              <Button color="primary" onPress={onClose}>
-                Action
-              </Button>
-            </DrawerFooter>
-          </>
+          </div>
         )}
       </DrawerContent>
     </Drawer>

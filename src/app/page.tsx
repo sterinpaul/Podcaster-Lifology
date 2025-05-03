@@ -30,8 +30,8 @@ export default function Home() {
       />
 
       {/* Floating Button */}
-      {selectedPodcasts?.length ? (
-        <div className="fixed bottom-0 left-0 right-0 flex justify-center items-center z-10 h-24 px-12 bg-gradient-to-t from-white to-transparent">
+      {!selectedPodcasts?.length ? (
+        <div className="fixed bottom-0 left-0 right-0 flex justify-center items-center h-24 px-12 bg-gradient-to-t from-white to-transparent">
           <Button
             className="bg-gray-500 text-white rounded-full shadow-lg transition-all transform flex items-center py-3 w-full cursor-pointer outline-none"
             onPress={onOpen}
@@ -44,7 +44,7 @@ export default function Home() {
       ) : null}
 
       {/* Bottom Drawer */}
-      <DrawerComponent isOpen={isOpen} onOpenChange={onOpenChange} />
+      <DrawerComponent isOpen={isOpen} onOpenChange={onOpenChange} selectedPodcasts={selectedPodcasts} />
     </main>
   );
 }

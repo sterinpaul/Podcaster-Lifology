@@ -44,13 +44,15 @@ export const usePodcasts = () => {
       ...podcast,
       isSelected: selectedSet.has(podcast._id)
     }))
+
+    const selectedUserPodcasts = podcasts.filter((podcast)=>selectedSet.has(podcast._id))
   
   const isLoading = podcastsLoading || selectedPodcastsLoading;
   const error = podcastsError || selectedPodcastsError;
   
   return {
     podcasts: mergedPodcasts,
-    selectedPodcasts,
+    selectedPodcasts: selectedUserPodcasts,
     isLoading,
     error,
   };

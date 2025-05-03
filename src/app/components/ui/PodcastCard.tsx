@@ -5,11 +5,13 @@ import { Button } from '@heroui/button';
 
 interface PodcastCardProps {
   podcast: Podcast;
+  deletable: boolean;
   onToggleSelection: (id: string,selected:boolean) => void;
 }
 
 export default function PodcastCard({
   podcast,
+  deletable,
   onToggleSelection,
 }: PodcastCardProps) {
   const handleSubscribe = () => {

@@ -6,7 +6,7 @@ import PodcastCard from './ui/PodcastCard';
 
 interface PodcastListProps {
   podcasts: Podcast[];
-  onToggleSelection: (id: string,selected:boolean) => void;
+  onToggleSelection: (podcast:Podcast) => void;
   isLoading?: boolean;
 }
 
@@ -70,7 +70,7 @@ export default function PodcastList({
                 transform: `translateY(${virtualRow.start}px)`,
               }}
             >
-              <PodcastCard 
+              <PodcastCard
                 podcast={podcast}
                 onToggleSelection={onToggleSelection} 
               />

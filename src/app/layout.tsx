@@ -1,6 +1,8 @@
-import type { Metadata } from "next";
+"use client"
+// import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import {Providers} from "./providers";
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,10 +15,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Podcaster",
-  description: "Podcasts at Your Fingertips",
-};
 
 export default function RootLayout({
   children,
@@ -25,10 +23,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <title>Podcaster</title>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Providers>{children}</Providers>
+        <Providers>
+          <Toaster />
+          {children}
+        </Providers>
       </body>
     </html>
   );

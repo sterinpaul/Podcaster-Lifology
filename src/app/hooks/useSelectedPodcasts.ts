@@ -6,6 +6,8 @@ import {
 } from "../utils";
 import { Podcast } from "../types";
 import { useState, useCallback, useEffect, useRef } from "react";
+import toast from "react-hot-toast";
+
 
 interface SaveSelectedPodcastsData {
   saveSelectedPodcasts: {
@@ -59,6 +61,12 @@ export const useSelectedPodcasts = (
       // Modify the selected podcasts
       queryClient.setQueryData(["selectedPodcasts", userId], () => {
         return selectedPodcasts.map((podcast) => podcast._id);
+      });
+      // Show success toast
+      toast.success("Saved successfully!", {
+        duration: 4000,
+        position: "top-right",
+        icon: '✅',
       });
     },
   });

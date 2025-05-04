@@ -81,7 +81,7 @@ export default function DrawerComponent({
                 </Button>
               </div>
             </DrawerHeader>
-            <DrawerBody className="px-2 h-100 overflow-y-scroll">
+            <DrawerBody className="px-2 h-[calc(100vh-15rem)] overflow-y-scroll">
               {selectedPodcasts?.length ? (
                 selectedPodcasts.map((podcast) => {
                   return (
@@ -105,7 +105,7 @@ export default function DrawerComponent({
                   handleSave()
                   onClose()
                 }}
-                className="m-auto w-100 rounded-full p-2 my-2 text-gray-50 cursor-pointer bg-gray-700 transition duration-300 hover:bg-gray-900"
+                className={`m-auto w-100 rounded-full p-2 my-2 text-gray-50 transition duration-200 bg-gray-700 ${selectedPodcasts.length === 0 || isSaving ? "cursor-not-allowed" : "cursor-pointer hover:bg-gray-900"}`}
                 disabled={selectedPodcasts.length === 0 || isSaving}
               >
                 {isSaving ? "Saving..." : "Save"}

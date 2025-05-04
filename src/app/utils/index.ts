@@ -65,8 +65,8 @@ export const fetchSelectedPodcastsQuery = `
   }
 `;
 
-export const saveSelectedPodcastsMutation = `
-  query saveSelectedPodcasts($userId: String!) {
-    selectedPodcasts(userId: $userId)
+export const saveSelectedPodcasts = `
+  mutation saveSelectedPodcasts($userId: String!, $selectedPodcasts: [String!]!) {
+    saveSelectedPodcasts(userId: $userId, selectedPodcasts: $selectedPodcasts)
   }
 `

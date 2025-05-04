@@ -2,11 +2,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   executeGraphQL,
-  getUserId,
-  saveSelectedPodcastsMutation,
+  saveSelectedPodcasts,
 } from "../utils";
 import { Podcast } from "../types";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 
 interface SaveSelectedPodcastsData {
   saveSelectedPodcasts: {
@@ -20,9 +19,16 @@ export const useSelectedPodcasts = (
   initialSelectedPodcasts: Podcast[] = []
 ) => {
   const queryClient = useQueryClient();
-  const [selectedPodcasts, setSelectedPodcasts] = useState<Podcast[]>(
-    initialSelectedPodcasts
-  );
+  const [selectedPodcasts, setSelectedPodcasts] = useState<Podcast[]>(() => initialSelectedPodcasts);
+  const isInitialized = useRef(false);
+
+  // One-time initialization when async data arrives
+  useEffect(() => {
+    if (!isInitialized.current && initialSelectedPodcasts.length > 0) {
+      setSelectedPodcasts(initialSelectedPodcasts);
+      isInitialized.current = true;
+    }
+  }, [initialSelectedPodcasts]);
 
   // Toggle podcast selection
   const togglePodcastSelection = useCallback((podcast: Podcast) => {
@@ -38,16 +44,11 @@ export const useSelectedPodcasts = (
     });
   }, []);
 
-  // Remove podcast from selection
-  const removePodcast = useCallback((podcastId: string) => {
-    setSelectedPodcasts((prev) => prev.filter((p) => p._id !== podcastId));
-  }, []);
-
   // Save selected podcasts mutation
   const { mutate: saveSelection, isPending: isSaving } = useMutation({
     mutationFn: async () => {
       return executeGraphQL<SaveSelectedPodcastsData>(
-        saveSelectedPodcastsMutation,
+        saveSelectedPodcasts,
         {
           userId,
           selectedPodcasts: selectedPodcasts.map((podcast) => podcast._id),
@@ -63,7 +64,6 @@ export const useSelectedPodcasts = (
   return {
     selectedPodcasts,
     togglePodcastSelection,
-    removePodcast,
     saveSelection,
     isSaving,
   };

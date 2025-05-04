@@ -56,8 +56,10 @@ export const useSelectedPodcasts = (
       );
     },
     onSuccess: () => {
-      // Invalidate and refetch the selected podcasts query
-      queryClient.invalidateQueries({ queryKey: ["selectedPodcasts", userId] });
+      // Modify the selected podcasts
+      queryClient.setQueryData(["selectedPodcasts", userId], () => {
+        return selectedPodcasts.map((podcast) => podcast._id);
+      });
     },
   });
 

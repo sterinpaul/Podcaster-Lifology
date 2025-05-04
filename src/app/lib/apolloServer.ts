@@ -3,12 +3,13 @@ import { gql } from "graphql-tag";
 import axios from "axios";
 import User from "../models/User";
 
+// Type definitions of graphql
 const typeDefs = gql`
   type Podcast {
     _id: String!
     name: String!
     img: String!
-    uNm: String!
+    title: String!
   }
 
   type Query {
@@ -24,13 +25,34 @@ const typeDefs = gql`
   }
 `;
 
+// Resolvers including queries and mutations
 const resolvers = {
   Query: {
     allPodcasts: async () => {
-      const response = await axios.get(
-        "https://openwhyd.org/hot/electro?format=json"
-      );
-      return response.data?.tracks;
+      const options = {
+        method: 'GET',
+        url: 'https://spotify23.p.rapidapi.com/search/',
+        params: {
+          q: 'movies',
+          type: 'podcasts',
+          offset: '0',
+          limit: '100',
+          numberOfTopResults: '5'
+        },
+        headers: {
+          'x-rapidapi-key': process.env.RAPID_API_KEY,
+          'x-rapidapi-host': 'spotify23.p.rapidapi.com'
+        }
+      };
+      try {
+        const response = await axios.request(options);
+        return response?.data?.podcasts?.items?.map(({data}:{data:{uri:string,name:string,publisher:{name:string},coverArt:{sources:{url:string}[]}}})=>(
+          {_id:data.uri,name:data.name,img:data.coverArt.sources[0].url,title:data.publisher.name}
+        ))
+        
+      } catch (error) {
+        console.error(error);
+      }
     },
     selectedPodcasts: async (_parent: any, args: { userId: string }) => {
       const { userId } = args;

@@ -2,7 +2,7 @@ export interface Podcast {
   _id: string;
   name: string;
   img: string;
-  uNm: string;
+  title: string;
   isSelected?: boolean;
 }
 

@@ -49,7 +49,7 @@ export const usePodcasts = () => {
   // Create a hash set of selected podcast IDs for quick lookup
   const selectedSet = new Set(selectedPodcastIds);
   const mergedPodcasts = allPodcastData.map(
-    (podcast: { _id: string; name: string; img: string; uNm: string }) => ({
+    (podcast: { _id: string; name: string; img: string; title: string }) => ({
       ...podcast,
       isSelected: selectedSet.has(podcast._id),
     })

@@ -54,7 +54,7 @@ export const fetchAllPodcastsQuery = `
     _id
     name
     img
-    uNm
+    title
   }
 }
 `;

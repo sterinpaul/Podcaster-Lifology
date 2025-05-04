@@ -32,7 +32,7 @@ export default function PodcastCard({
       </div>
       <div className="flex-grow min-w-0">
         <h4 className="text-gray-900 truncate font-bold">{podcast.name}</h4>
-        <p className="text-sm text-gray-500 capitalize truncate">{podcast.uNm}</p>
+        <p className="text-sm text-gray-500 capitalize truncate">{podcast.title}</p>
       </div>
       <div className="ml-2">
         {deletable ? (

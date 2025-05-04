@@ -1,5 +1,5 @@
 "use client"
-import React, { useCallback } from 'react';
+import React, { useMemo } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { Podcast } from '../types';
 import PodcastCard from './ui/PodcastCard';
@@ -21,7 +21,7 @@ export default function PodcastList({
   const rowVirtualizer = useVirtualizer({
     count: isLoading ? 10 : podcasts.length,
     getScrollElement: () => parentRef.current,
-    estimateSize: useCallback(() => 88, []), // Approximate height of PodcastCard (16px padding top/bottom + 16px image height + some text)
+    estimateSize: useMemo(() => () => 88, []), // Approximate height of PodcastCard
     overscan: 5,
   });
 
@@ -60,7 +60,7 @@ export default function PodcastList({
           const podcast = podcasts[virtualRow.index];
           return (
             <div
-              key={podcast._id}
+              key={podcast._id ?? virtualRow.index}
               style={{
                 position: 'absolute',
                 top: 0,

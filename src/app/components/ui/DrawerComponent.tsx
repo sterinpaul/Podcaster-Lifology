@@ -105,8 +105,8 @@ export default function DrawerComponent({
                   handleSave()
                   onClose()
                 }}
-                className={`m-auto w-100 rounded-full p-2 my-2 text-gray-50 transition duration-200 bg-gray-700 ${selectedPodcasts.length === 0 || isSaving ? "cursor-not-allowed" : "cursor-pointer hover:bg-gray-900"}`}
-                disabled={selectedPodcasts.length === 0 || isSaving}
+                className={`m-auto w-100 rounded-full p-2 my-2 text-gray-50 transition duration-200 bg-gray-700 cursor-pointer hover:bg-gray-900`}
+                // disabled={selectedPodcasts.length === 0 || isSaving}
               >
                 {isSaving ? "Saving..." : "Save"}
               </Button>
